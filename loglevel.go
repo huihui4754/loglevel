@@ -7,14 +7,16 @@ import (
 	"strings"
 )
 
+type Level int
+
 type MyLog struct {
 	*log.Logger
-	level    int
+	level    Level
 	fileName string
 }
 
 const (
-	Debug int = iota
+	Debug Level = iota
 	Info
 	Warn
 	Error
@@ -27,7 +29,7 @@ const (
 	ErrorStr = "[ERROR]"
 )
 
-var levelStr = map[int]string{
+var levelStr = map[Level]string{
 	Debug: DebugStr,
 	Info:  InfoStr,
 	Warn:  WarnStr,
@@ -45,7 +47,7 @@ func getCallerFileName() string {
 	return fileName
 }
 
-func NewLog(level int) *MyLog {
+func NewLog(level Level) *MyLog {
 
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime) // 保留日期和时间
 	myLog := MyLog{
@@ -56,7 +58,7 @@ func NewLog(level int) *MyLog {
 	return &myLog
 }
 
-func (l *MyLog) SetLevel(level int) {
+func (l *MyLog) SetLevel(level Level) {
 	l.level = level
 }
 
@@ -92,7 +94,7 @@ func (l *MyLog) Errorf(format string, msgArr ...any) {
 	l.printf(Error, format, msgArr...)
 }
 
-func (l *MyLog) print(level int, msgArr ...any) {
+func (l *MyLog) print(level Level, msgArr ...any) {
 	if l.level <= level {
 		levelStr := levelStr[level]
 		// 构造包含文件名的消息前缀
@@ -101,7 +103,7 @@ func (l *MyLog) print(level int, msgArr ...any) {
 	}
 }
 
-func (l *MyLog) printf(level int, format string, msgArr ...any) {
+func (l *MyLog) printf(level Level, format string, msgArr ...any) {
 	if l.level <= level {
 		levelStr := levelStr[level]
 		// 构造包含文件名的格式化前缀
