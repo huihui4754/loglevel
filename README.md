@@ -13,14 +13,14 @@ func main() {
     logger  = loglevel.NewLog(loglevel.Info)
     // logger.Debug(msgArr ...any)
 
-    //  Debug(msgArr ...any)
-    //  Debugf(format string, msgArr ...any)
-    //  Error(msgArr ...any)
-    //  Errorf(format string, msgArr ...any)
-    //  Info(msgArr ...any)
-    //  Infof(format string, msgArr ...any)
-    //  Warn(msgArr ...any)
-    //  Warnf(format string, msgArr ...any)
+    //  logger.Debug(msgArr ...any)
+    //  logger.Debugf(format string, msgArr ...any)
+    //  logger.Error(msgArr ...any)
+    //  logger.Errorf(format string, msgArr ...any)
+    //  logger.Info(msgArr ...any)
+    //  logger.Infof(format string, msgArr ...any)
+    //  logger.Warn(msgArr ...any)
+    //  logger.Warnf(format string, msgArr ...any)
 
 }
 
