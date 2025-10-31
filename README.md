@@ -11,7 +11,7 @@ import (
 
 func main() {
     logger  = loglevel.NewLog(loglevel.Info)
-    // logger.Debug(msgArr ...any)
+    logger.Debug("hello")
 
     //  logger.Debug(msgArr ...any)
     //  logger.Debugf(format string, msgArr ...any)
