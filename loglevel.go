@@ -11,8 +11,7 @@ type Level int
 
 type MyLog struct {
 	*log.Logger
-	level    Level
-	fileName string
+	level Level
 }
 
 const (
@@ -39,21 +38,20 @@ var levelStr = map[Level]string{
 func getCallerFileName() string {
 	_, file, _, ok := runtime.Caller(2)
 	if !ok {
-		return "unknown"
+		return "<unknown file>"
 	}
 	// 提取文件名（不含路径）
 	parts := strings.Split(file, "/")
 	fileName := parts[len(parts)-1]
-	return fileName
+	return "<" + fileName + ">"
 }
 
 func NewLog(level Level) *MyLog {
 
-	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime) // 保留日期和时间
+	logger := log.New(os.Stdout, getCallerFileName(), log.Ldate|log.Ltime) // 保留日期和时间
 	myLog := MyLog{
-		Logger:   logger,
-		level:    level,
-		fileName: getCallerFileName(),
+		Logger: logger,
+		level:  level,
 	}
 	return &myLog
 }
@@ -98,7 +96,7 @@ func (l *MyLog) print(level Level, msgArr ...any) {
 	if l.level <= level {
 		levelStr := levelStr[level]
 		// 构造包含文件名的消息前缀
-		prefix := []any{levelStr, "[", l.fileName, "]: "}
+		prefix := []any{levelStr}
 		l.Logger.Print(append(prefix, msgArr...)...)
 	}
 }
@@ -107,7 +105,7 @@ func (l *MyLog) printf(level Level, format string, msgArr ...any) {
 	if l.level <= level {
 		levelStr := levelStr[level]
 		// 构造包含文件名的格式化前缀
-		format = levelStr + " [" + l.fileName + "]: " + format
+		format = levelStr + format
 		l.Logger.Printf(format, msgArr...)
 	}
 }
