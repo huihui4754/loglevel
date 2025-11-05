@@ -38,12 +38,12 @@ var levelStr = map[Level]string{
 func getCallerFileName() string {
 	_, file, _, ok := runtime.Caller(2)
 	if !ok {
-		return "<unknown file>"
+		return ""
 	}
 	// 提取文件名（不含路径）
 	parts := strings.Split(file, "/")
 	fileName := parts[len(parts)-1]
-	return "<" + fileName + ">"
+	return "[" + fileName + "] "
 }
 
 func NewLog(level Level) *MyLog {

@@ -10,6 +10,7 @@ import (
 
 func TestNewLog(t *testing.T) {
 	log := NewLog(Info)
+	log.Info("hello")
 	if log == nil {
 		t.Error("NewLog should not return nil")
 	}
